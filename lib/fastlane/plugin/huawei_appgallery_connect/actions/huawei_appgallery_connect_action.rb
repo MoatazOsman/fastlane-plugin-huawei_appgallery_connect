@@ -11,6 +11,10 @@ module Fastlane
           UI.message("Cannot retrieve token, please check your client ID and client secret")
         else
 
+          if params[:release_notes] != nil
+            Helper::HuaweiAppgalleryConnectHelper.update_release_notes(params[:client_id], token, params[:app_id], params[:release_notes])
+          end
+
           if params[:privacy_policy_url] != nil
             Helper::HuaweiAppgalleryConnectHelper.update_appinfo(params[:client_id], token, params[:app_id], params[:privacy_policy_url])
           end
@@ -162,6 +166,12 @@ module Fastlane
                                        description: "Delay before submitting the app for review. Default is 10 seconds. Change this to a higher value if you are having issues submitting the app for review",
                                        optional: true,
                                        type: Integer)
+
+          FastlaneCore::ConfigItem.new(key: :release_notes,
+                                       env_name: "HUAWEI_APPGALLERY_RELEASE_NOTES",
+                                       description: "Dictionary with language codes as the keys and the release notes as the values",
+                                       optional: true,
+                                       type: Hash)
         ]
       end
 

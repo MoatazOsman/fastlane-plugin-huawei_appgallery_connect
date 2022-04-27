@@ -76,6 +76,28 @@ module Fastlane
         end
       end
 
+      def self.update_release_notes(client_id, token, app_id, release_notes)
+        release_notes.each do |lang, notes|
+          UI.message("Updating release notes for language #{lang} ...")
+
+          content = {'lang' => lang, 'newFeatures' => notes}
+
+          uri = URI("https://connect-api.cloud.huawei.com/api/publish/v2/app-language-info?appId=#{app_id}")
+          http = Net::HTTP.new(uri.host, uri.port)
+          http.use_ssl = true
+          request = Net::HTTP::Put.new(uri)
+          request.body = content.to_json.encode('utf-8')
+          request['Content-Type'] = "application/json"
+          request['Authorization'] = "Bearer #{token}"
+          request['client_id'] = client_id
+          result = http.request(request)
+
+          if result.code.to_i != 200
+            UI.user_error!("Could not update release notes for #{lang}. (HTTP #{result.code} - #{result.message})")
+          end
+        end
+      end
+
 
       def self.upload_app(token, client_id, app_id, apk_path, is_aab)
         UI.message("Fetching upload URL")

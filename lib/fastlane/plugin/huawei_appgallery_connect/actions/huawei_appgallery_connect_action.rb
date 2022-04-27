@@ -165,7 +165,7 @@ module Fastlane
                                        env_name: "HUAWEI_APPGALLERY_DELAY_BEFORE_REVIEW",
                                        description: "Delay before submitting the app for review. Default is 10 seconds. Change this to a higher value if you are having issues submitting the app for review",
                                        optional: true,
-                                       type: Integer)
+                                       type: Integer),
 
           FastlaneCore::ConfigItem.new(key: :release_notes,
                                        env_name: "HUAWEI_APPGALLERY_RELEASE_NOTES",

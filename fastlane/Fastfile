@@ -10,6 +10,11 @@ lane :test do
 
     submit_for_review: false,
 
+    release_notes: {
+     "en-UK" => " - v3.6.65
+                 - Fix Issues"
+    },
+
     privacy_policy_url: "https://example.com",
     changelog_path: "<PATH_TO_CHANGELOG_FILE>",
 
